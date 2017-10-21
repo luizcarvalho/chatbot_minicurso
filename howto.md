@@ -75,7 +75,6 @@ Para externalizar o servidor
 ```
 require 'sinatra'
 require 'sinatra/reloader'
-require 'pry'
 
 VERIFY_TOKEN = 'VERIFY_TOKEN_EXTREMAMENTE_SECRETO'
 
@@ -101,9 +100,11 @@ end
 
 - Agora vamos responder essas mensagens, acesse: https://developers.facebook.com/docs/messenger-platform/reference/send-api 
 
+- Envie uma mensagem e acesse http://127.0.0.1:4040/inspect/http
+- pegar sender id
+- enviar via curl como na documentação
 
-```
-post '/webhook' do
-  puts params
-end
-```
+
+FAZER VIA CODIGO
+
+

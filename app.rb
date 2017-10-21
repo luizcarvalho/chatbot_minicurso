@@ -1,6 +1,6 @@
 require 'sinatra'
 require 'sinatra/reloader'
-require 'pry'
+
 
 VERIFY_TOKEN = 'VERIFY_TOKEN_EXTREMAMENTE_SECRETO'
 
@@ -10,7 +10,7 @@ get '/webhook' do
 end
 
 post '/webhook' do
-  puts params
+  puts JSON.parse(request.body.read)
 end
 
 
