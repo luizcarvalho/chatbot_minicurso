@@ -193,3 +193,25 @@ Bot.on :message do |message|
   message.reply(text: message.text)
 end
 ```
+
+# Adicionando funcionalidades ao Chatbot
+
+Instale a gem do Wikipedia
+```
+$ gem install wikipedia-client
+```
+
+Em seu app.rb
+```
+require 'wikipedia'
+# (...)
+Bot.on :message do |message|
+  page = Wikipedia.find(message.text)
+  if page.text
+    message.reply(text: "#{page.text.slice(0, 150)}... \b link completo: #{page.fullurl}")
+  else
+    message.reply("Infelizmente não consegui encontrar a definição para #{message.text}")
+  end
+end
+```
+
