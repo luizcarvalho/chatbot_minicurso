@@ -111,7 +111,8 @@ end
 
 ```
 export VERIFY_TOKEN=VERIFY_TOKEN_EXTREMAMENTE_SECRETO
-export PAGE_ACCESS_TOKEN=TOKEN_DA_PAGINA
+export ACCESS_TOKEN=TOKEN_DA_PAGINA
+export APP_SECRET=CHAVE_SECRETA_APPLICATION
 ```
 
 
@@ -129,7 +130,7 @@ post '/webhook' do
   puts JSON.parse(request.body.read)
   # Substitua o recipient id pelo seu (http://127.0.0.1:4040/inspect/http)
   message_json = '{ "recipient": { "id": "1389611254450074" }, "message": { "text": "hello, world!" } }'
-  RestClient.post("https://graph.facebook.com/v2.6/me/messages?access_token=#{ENV['PAGE_ACCESS_TOKEN']}", message_json, :content_type => :json)
+  RestClient.post("https://graph.facebook.com/v2.6/me/messages?access_token=#{ENV['ACCESS_TOKEN']}", message_json, :content_type => :json)
 end
 
 ```
@@ -155,3 +156,40 @@ end
 # Usando a Gem facebook-messenger
 
 
+instala Gem Facebook-Messenger
+
+```
+$ gem install facebook-messenger
+```
+
+Crie o arquivo config.ru e digite as seguintes instruções
+
+```
+require './app'
+
+require 'facebook/messenger'
+
+map('/webhook') do
+  run Sinatra::Application
+  run Facebook::Messenger::Server
+end
+
+# run regular sinatra for other paths (in case you ever need it)
+run Sinatra::Application
+
+```
+
+Em seu app.rb
+
+```
+require 'sinatra'
+require 'sinatra/reloader'
+require 'facebook/messenger'
+
+include Facebook::Messenger
+puts Facebook::Messenger::Subscriptions.subscribe(access_token: ENV['ACCESS_TOKEN'])
+
+Bot.on :message do |message|
+  message.reply(text: message.text)
+end
+```
