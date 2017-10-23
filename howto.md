@@ -106,8 +106,13 @@ end
 
 
 ## Melhorando nosso código
+
+
+
+```
 export VERIFY_TOKEN=VERIFY_TOKEN_EXTREMAMENTE_SECRETO
 export PAGE_ACCESS_TOKEN=TOKEN_DA_PAGINA
+```
 
 
 
@@ -122,8 +127,31 @@ require 'rest-client'
 # Substitua o recipient id pelo seu
 post '/webhook' do
   puts JSON.parse(request.body.read)
+  # Substitua o recipient id pelo seu (http://127.0.0.1:4040/inspect/http)
   message_json = '{ "recipient": { "id": "1389611254450074" }, "message": { "text": "hello, world!" } }'
   RestClient.post("https://graph.facebook.com/v2.6/me/messages?access_token=#{ENV['PAGE_ACCESS_TOKEN']}", message_json, :content_type => :json)
 end
 
 ```
+
+
+# Adicionando capacidade de resposta
+Pegue as informações em: http://127.0.0.1:4040/inspect/http
+
+```
+post '/webhook' do
+  data = JSON.parse(request.body.read)
+
+  sender_id = data['entry'].first['messaging'].first['sender']['id'].to_s
+  message = data['entry'].first['messaging'].first['message']['text']
+
+  message_json = '{ "recipient": { "id": "' + sender_id + '" }, "message": { "text": "' + message + '" } }'
+
+  RestClient.post("https://graph.facebook.com/v2.6/me/messages?access_token=#{ENV['PAGE_ACCESS_TOKEN']}", message_json, :content_type => :json)
+end
+```
+
+
+# Usando a Gem facebook-messenger
+
+
