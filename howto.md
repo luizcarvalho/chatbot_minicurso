@@ -32,7 +32,7 @@ rode
 ruby app.rb
 ```
 
-Altere o código para 
+Altere o código para
 ```
 require 'sinatra'
 
@@ -51,7 +51,7 @@ require 'sinatra/reloader'
 
 ### Criando um app do Facebook
 
-- Acesse https://developers.facebook.com/apps/ 
+- Acesse https://developers.facebook.com/apps/
 - Adicionar um novo aplicativo
 - Crie um número de identificação do aplicativo
 - Messenger -> Configurar
@@ -98,13 +98,32 @@ post '/webhook' do
 end
 ```
 
-- Agora vamos responder essas mensagens, acesse: https://developers.facebook.com/docs/messenger-platform/reference/send-api 
+- Agora vamos responder essas mensagens, acesse: https://developers.facebook.com/docs/messenger-platform/reference/send-api
 
 - Envie uma mensagem e acesse http://127.0.0.1:4040/inspect/http
 - pegar sender id
 - enviar via curl como na documentação
 
 
-FAZER VIA CODIGO
+## Melhorando nosso código
+export VERIFY_TOKEN=VERIFY_TOKEN_EXTREMAMENTE_SECRETO
+export PAGE_ACCESS_TOKEN=TOKEN_DA_PAGINA
 
 
+
+```
+$ gem isntall rest-client
+```
+
+```
+require 'rest-client'
+# (...)
+
+# Substitua o recipient id pelo seu
+post '/webhook' do
+  puts JSON.parse(request.body.read)
+  message_json = '{ "recipient": { "id": "1389611254450074" }, "message": { "text": "hello, world!" } }'
+  RestClient.post("https://graph.facebook.com/v2.6/me/messages?access_token=#{ENV['PAGE_ACCESS_TOKEN']}", message_json, :content_type => :json)
+end
+
+```
