@@ -9,6 +9,7 @@ Primeiramente a máquina deve estar configurada com ruby, pode utilizar esse tut
 $ sudo apt-get install software-properties-common
 $ sudo apt-add-repository ppa:brightbox/ruby-ng
 $ sudo apt-get update
+sudo apt-get install  ruby2.2-dev
 ```
 
 
