@@ -20,7 +20,7 @@ Simple Ruby Chatbot
 -------------
 
 ```
-gem install sinatra
+gem install sinatra --no-ri --no-rdoc
 ```
 
 crie o arquivo app.rb e abra em seu editor
