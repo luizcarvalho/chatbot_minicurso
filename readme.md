@@ -4,6 +4,14 @@ MINICURSO CHATBOT UNITINS
 
 Primeiramente a máquina deve estar configurada com ruby, pode utilizar esse tutorial para isso https://www.digitalocean.com/community/tutorials/how-to-install-ruby-on-rails-with-rvm-on-ubuntu-16-04.
 
+
+```
+$ sudo apt-get install software-properties-common
+$ sudo apt-add-repository ppa:brightbox/ruby-ng
+$ sudo apt-get update
+```
+
+
 ----------
 
 
